@@ -1,0 +1,64 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<form id="edit" method="POST">
+			<label>Title</title><br />
+			<input type="text" name="title" value="" /><br /><br />
+			
+			<label>Content</title><br />
+			<textarea name="content"></textarea><br /><br />
+			
+			
+			<label>Date</title><br />
+			<input type="datetime-local" name="date" value=""/><br /><br />
+			
+			<label>Image</title><br />
+			<input type="url" name="img" value="" /><br /><br />
+			
+			<label>Author ID</title><br />
+			<input type="number" name="user_ID" value="" /><br /><br />
+			
+			<button type="submit">Edit post</button>
+		</form>
+		<script src="assets/jquery-3.5.1.min.js"></script>
+		<script src="assets/app.js"></script>
+		<script>
+			$.getJSON('https://nku-ase200-1.herokuapp.com/API/posts.php?id='+findGetParameter('id'),function(data){
+				if(data.title==null) window.location.href='index.html';
+				$('#edit input[name=title]').val(data.title);
+				$('#edit input[name=date]').val(data.date);
+				$('#edit input[name=user_ID]').val(data.user_ID);
+				$('#edit input[name=img]').val(data.img);
+				$('#edit textarea[name=content]').val(data.content);
+				if(data.manage==0) window.location.href='index.html';
+			});
+			$(document).on('submit','#edit',function(e){
+				//tell the browser to ignore the default event handler
+				e.preventDefault();
+				
+				var data={
+					ID:findGetParameter('id'),
+					title:$('form#edit input[name=title]').val(),
+					user_ID:$('form#edit input[name=user_ID]').val(),
+					content:$('form#edit textarea[name=content]').val(),
+					date:$('form#edit input[name=date]').val(),
+					img:$('form#edit input[name=img]').val()
+				};
+				console.log(data);
+				$.ajax({
+					type:'PUT',
+					url:'https://nku-ase200-1.herokuapp.com/API/posts.php',
+					data:data,
+					success: function(output, status, xhr) { 
+						if(output.status==1){
+							alert('request is successful');
+						}else{
+							alert(output.message);
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
