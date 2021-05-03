@@ -13,6 +13,9 @@
 			<label>Date</title><br />
 			<input type="datetime-local" name="date" value=""/><br /><br />
 			
+			<label>Expiration</title><br />
+			<input type="datetime-local" name="expiration" /><br /><br />
+			
 			<label>Image</title><br />
 			<input type="url" name="img" value="" /><br /><br />
 			
@@ -28,6 +31,7 @@
 				if(data.title==null) window.location.href='index.html';
 				$('#edit input[name=title]').val(data.title);
 				$('#edit input[name=date]').val(data.date);
+				$('#edit input[name=expiration]').val(data.expiration);
 				$('#edit input[name=user_ID]').val(data.user_ID);
 				$('#edit input[name=img]').val(data.img);
 				$('#edit textarea[name=content]').val(data.content);
@@ -43,6 +47,7 @@
 					user_ID:$('form#edit input[name=user_ID]').val(),
 					content:$('form#edit textarea[name=content]').val(),
 					date:$('form#edit input[name=date]').val(),
+					expiration:$('form#edit input[name=expiration]').val(),
 					img:$('form#edit input[name=img]').val()
 				};
 				console.log(data);

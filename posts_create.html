@@ -13,6 +13,9 @@
 			<label>Date</title><br />
 			<input type="datetime-local" name="date" /><br /><br />
 			
+			<label>Expiration</title><br />
+			<input type="datetime-local" name="expiration" /><br /><br />
+			
 			<label>Image</title><br />
 			<input type="url" name="img" /><br /><br />
 			
@@ -28,6 +31,7 @@
 					title:$('form#create input[name=title]').val(),
 					content:$('form#create textarea[name=content]').val(),
 					date:$('form#create input[name=date]').val(),
+					expiration:$('form#create input[name=expiration]').val(),
 					img:$('form#create input[name=img]').val()
 				};
 				console.log(data);
