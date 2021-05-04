@@ -55,7 +55,10 @@
 						<button class="btn btn-primary" type="submit">Register your account</button>
 					</div>
 				</form>
-			</div>			
+			</div>
+				<div class="d-grid mt-5">
+				  <button class="btn btn-primary" type="button">Sign out</button>
+				</div>
 		</div>		
 	</div>
 
@@ -71,8 +74,6 @@
 				
 				var data={
 					email:$('form#signin input[name=email]').val(),
-					firstname:$('form#signin input[name=firstname]').val(),
-					lastname:$('form#signin input[name=firstname]').val(),
 					password:$('form#signin input[name=password]').val(),
 					action:'signin'
 				};
@@ -88,6 +89,26 @@
 						}else{
 							$('form#signin .alert').addClass('alert-danger').removeClass('d-none');
 							$('form#signin .alert').text(output.message);
+						}
+					}
+				});
+			});
+			$(document).on('submit','#signout',function(e){
+				//tell the browser to ignore the default event handler
+				e.preventDefault();
+				
+				var data={
+					action:'signout'
+				};
+				$.ajax({
+					type:'POST',
+					url:'https://final-for-ase220.herokuapp.com/API/auth.php',
+					data:data,
+					success: function(output, status, xhr) { 
+						if(output.status==1){
+							$('form#signin .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');
+							$('form#signin .alert').text(output.message);
+							window.location='index.html';
 						}
 					}
 				});
