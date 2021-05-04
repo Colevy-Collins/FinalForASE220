@@ -34,6 +34,7 @@
 			<div class="col-lg-6">
 				<h1>Register your account</h1>
 				<form id="signup" method="POST">
+					<div class="alert d-none" role="alert"></div>
 					<input type="hidden" name="action" value="signup" />
 					<div class="form-group">
 						<label>E-mail</label>
@@ -56,8 +57,9 @@
 					</div>
 				</form>
 			</div>
-				<div class="d-grid mt-5">
-				  <button class="btn btn-primary" type="button">Sign out</button>
+				<div class="d-grid gap-5 mt-5">
+				  <button class="btn btn-primary" type="submit">Sign out</button>
+				  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
 				</div>
 		</div>		
 	</div>
@@ -79,7 +81,7 @@
 				};
 				$.ajax({
 					type:'POST',
-					url:'https://final-for-ase220.herokuapp.com/API/auth.php',
+					url:'/FinalASE220/API/auth.php',
 					data:data,
 					success: function(output, status, xhr) { 
 						if(output.status==1){
@@ -93,6 +95,30 @@
 					}
 				});
 			});
+			$(document).on('submit','#signup',function(e){
+				//tell the browser to ignore the default event handler
+				e.preventDefault();
+				
+				var data={
+					email:$('form#signup input[name=email]').val(),
+					password:$('form#signup input[name=password]').val(),
+					action:'signup'
+				};
+				$.ajax({
+					type:'POST',
+					url:'/FinalASE220/API/auth.php',
+					data:data,
+					success: function(output, status, xhr) { 
+						if(output.status==1){
+							$('form#signup .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');
+							$('form#signup .alert').text(output.message);
+						}else{
+							$('form#signup .alert').addClass('alert-danger').removeClass('d-none');
+							$('form#signup .alert').text(output.message);
+						}
+					}
+				});
+			});
 			$(document).on('submit','#signout',function(e){
 				//tell the browser to ignore the default event handler
 				e.preventDefault();
@@ -102,7 +128,7 @@
 				};
 				$.ajax({
 					type:'POST',
-					url:'https://final-for-ase220.herokuapp.com/API/auth.php',
+					url:'/FinalASE220/API/auth.php?action=signout',
 					data:data,
 					success: function(output, status, xhr) { 
 						if(output.status==1){

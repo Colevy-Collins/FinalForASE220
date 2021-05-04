@@ -1,8 +1,14 @@
 <?php
+/*
 $host = 'us-cdbr-east-03.cleardb.com';
 $db = 'heroku_5bffb76aee0a0bf';
 $user = 'b98fb054124929';
 $pass = 'f16dc803';
+*/
+$host = '127.0.0.1:3307';
+$db = 'events';
+$user = 'root';
+$pass = '';
 $charset = 'utf8';
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $opt = [
