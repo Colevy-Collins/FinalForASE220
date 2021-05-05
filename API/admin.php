@@ -3,7 +3,6 @@ require(__DIR__.'/lib_db.php');
 require(__DIR__.'/lib_session.php');
 header('Content-type: application/json');
 
-
 switch($_SERVER['REQUEST_METHOD']){
 	case 'GET':
 		if(isset($_GET['id'])) detail($pdo);
@@ -26,21 +25,25 @@ switch($_SERVER['REQUEST_METHOD']){
 function index($pdo){
 	$stmt=$pdo->prepare('SELECT ID,email FROM users');
 	$stmt->execute([]);
-	die(json_encode($stmt->fetchAll()));
-}
+	if(!isset($_SESSION['user/is_admin'])){
+		$_SESSION['user/is_admin'] = 0;
+	}
+	die(json_encode(['users'=>$stmt->fetchAll(),'admin'=>$_SESSION['user/is_admin']]));
+	}
 
 function detail($pdo){
 	$stmt = $pdo->prepare('SELECT ID, email, firstname, lastname, is_admin FROM users WHERE ID=?');
 	$stmt->execute([$_GET['id']]);
 	$user=$stmt->fetch();
-	if(isset($_SESSION['user/ID']) && ($user['ID']==$_SESSION['user/ID'] || $_SESSION['user/is_admin']==1)) $user['manage']=1;
+	if(isset($_SESSION['user/ID']) && ( $_SESSION['user/is_admin']==1)) $user['manage']=1;
 	else $user['manage']=0;
+
 	die(json_encode($user));
 }
 
 function edit($pdo,$_PUT){
 	if(count($_PUT)>0){
-		$stmt = $pdo->prepare('UPDATE users SET email = ?, firstname = ?, lastname = ?, is_admin = ?,  WHERE users.ID =?');
+		$stmt = $pdo->prepare('UPDATE users SET email = ?, firstname = ?, lastname = ?, is_admin = ?  WHERE users.ID =?');
 		$stmt->execute([$_PUT['email'],$_PUT['firstname'],$_PUT['lastname'],$_PUT['is_admin'],$_PUT['ID']]);
 		die(json_encode(['status'=>1,'message'=>'Your data have been saved']));
 	}

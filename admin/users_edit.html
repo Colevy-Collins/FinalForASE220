@@ -13,19 +13,19 @@
 			<input type="text" name="email" value="" /><br /><br />
 			
 			<label>First Name</title><br />
-			<textarea name="firstname"></textarea><br /><br />
+			<input type="text" name="firstname" value="" /><br /><br />
 			
 			<label>Last Name</title><br />
 			<input type="text" name="lastname" value=""/><br /><br />
 			
-			<label>User ID</title><br />
-			<input type="number" name="user_ID" value="" /><br /><br />
+			<label>Is Admin</title><br />
+			<input type="number" name="is_admin" value="" /><br /><br />
 			
 			<button type="submit">Edit Users</button>
 		</form>
 		
 		<div class="d-grid gap-5 mt-5">
-		  <a class="btn btn-primary" href="index.html" role="button">Back to Users</a>
+		  <a class="btn btn-primary" href="admin.html" role="button">Back to Users</a>
 		</div>
 		
 		<!-- Optional JavaScript; choose one of the two! -->
@@ -41,15 +41,13 @@
 		<script src="../assets/jquery-3.5.1.min.js"></script>
 		<script src="../assets/app.js"></script>
 		<script>
-			$.getJSON('/FinalASE220/API/posts.php?id='+findGetParameter('id'),function(data){
-				if(data.title==null) window.location.href='index.html';
-				$('#edit input[name=title]').val(data.title);
-				$('#edit input[name=date]').val(data.date);
-				$('#edit input[name=expiration]').val(data.expiration);
-				$('#edit input[name=user_ID]').val(data.user_ID);
-				$('#edit input[name=img]').val(data.img);
-				$('#edit textarea[name=content]').val(data.content);
-				if(data.manage==0) window.location.href='index.html';
+			$.getJSON('/FinalASE220/API/admin.php?id='+findGetParameter('id'),function(data){
+				if(data.email==null) window.location.href='admin.html';
+				$('#edit input[name=email]').val(data.email);
+				$('#edit input[name=firstname]').val(data.firstname);
+				$('#edit input[name=lastname]').val(data.lastname);
+				$('#edit input[name=is_admin]').val(data.is_admin);
+				if(data.manage==0) window.location.href='admin.html';
 			});
 			$(document).on('submit','#edit',function(e){
 				//tell the browser to ignore the default event handler
@@ -57,22 +55,20 @@
 				
 				var data={
 					ID:findGetParameter('id'),
-					title:$('form#edit input[name=title]').val(),
-					user_ID:$('form#edit input[name=user_ID]').val(),
-					content:$('form#edit textarea[name=content]').val(),
-					date:$('form#edit input[name=date]').val(),
-					expiration:$('form#edit input[name=expiration]').val(),
-					img:$('form#edit input[name=img]').val()
+					email:$('form#edit input[name=email]').val(),
+					is_admin:$('form#edit input[name=is_admin]').val(),
+					firstname:$('form#edit input[name=firstname]').val(),
+					lastname:$('form#edit input[name=lastname]').val(),
 				};
 				console.log(data);
 				$.ajax({
 					type:'PUT',
-					url:'/FinalASE220/API/posts.php',
+					url:'/FinalASE220/API/admin.php',
 					data:data,
 					success: function(output, status, xhr) { 
 						if(output.status==1){
 							alert('request is successful');
-							window.location.href="index.html";
+							window.location.href="admin.html";
 						}else{
 							alert(output.message);
 						}

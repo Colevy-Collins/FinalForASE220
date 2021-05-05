@@ -12,7 +12,6 @@
 	<body>
 	
 		 <h1>All our Events</h1>
-		 <button type="button" class="btn btn-primary">Sign In Page</button>
 		 <button type="button" class="btn btn-info" >Back to Events</button>
 		 
 		<div id="users">
@@ -32,18 +31,21 @@
 		
 		<script src="../assets/jquery-3.5.1.min.js"></script>
 		<script>
-			$(document).on("click",".btn-primary",function(){
-					window.location.href="auth.html";
-					
-			});
+			$.getJSON('../API/admin.php',function(data){
+				console.log(data);
+				if(data.admin==0){
+					alert("You do not Have admin access. You will be returned to Events");
+					window.location.href="../index.html";
+				}else{
+					for(i=0;i<data.users.length;i++) $('#users').append('<div><h3><a href="users_detail.html?id='+data.users[i].ID+'">'+data.users[i].email+'</a></h3></div>');
+				}
+				});
+			
 			$(document).on("click",".btn-info",function(){
 					window.location.href="../index.html";
 					
 			});
 				//https://final-for-ase220.herokuapp.com
-			$.getJSON('../API/admin.php',function(data){
-				for(i=0;i<data.length;i++) $('#users').append('<div><h3><a href="users_detail.html?id='+data[i].ID+'">'+data[i].email+'</a></h3></div>');
-			});
 		</script>
 	</body>
 </html>

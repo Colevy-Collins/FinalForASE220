@@ -15,7 +15,7 @@
 		 <button id="signin"type="button" class="btn btn-primary">Sign In Page</button>
 		 <button id="signout" class="btn btn-primary d-none" type="submit">Sign out</button>
 		 <button id="createbnt"type="button" class="btn btn-secondary">Create Post</button>
-		 <button type="button" class="btn btn-dark">User Access</button>
+		 <button id="admin"type="button" class="btn btn-dark">User Access</button>
 		 
 		<div id="posts">
 		</div>
@@ -42,6 +42,9 @@
 						$("#signin").hide();
 						$('#signout').removeClass('d-none');
 					}
+					if (data.admin==0){
+						$('#admin').hide();
+					}	
 				for(i=0;i<data.posts.length;i++) $('#posts').append('<div><h3><a href="posts_detail.html?id='+data.posts[i].ID+'">'+data.posts[i].title+'</a></h3></div>');
 			});
 			
@@ -65,11 +68,7 @@
 					type:'GET',
 					url:'/FinalASE220/API/auth.php?action=signout',
 					success: function(output, status, xhr) { 
-						if(output.status==1){
-							$('form#signin .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');
-							$('form#signin .alert').text(output.message);
-							window.location='index.html';
-						}
+							alert(output.message);
 					}
 				});
 			});

@@ -12,6 +12,15 @@ if(isset($_GET['action']) && $_GET['action']=='signout'){
 	
 }
 
+if(isset($_GET['action']) && $_GET['action']=='checkadmin'){
+	
+	if($_SESSION['user/is_admin']==1){
+		die(json_encode(['status'=>1, 'admin'=> 1,'message'=>'The user is an admin']));
+	}else{
+		die(json_encode(['status'=>1, 'admin'=> 0,'message'=>'The user is not an admin']));
+	}
+}
+
 if(isset($_GET['action']) && $_GET['action']=='checklogged'){
 	
 	if(isset($_SESSION['user/ID'])){

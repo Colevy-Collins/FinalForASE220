@@ -26,7 +26,10 @@ switch($_SERVER['REQUEST_METHOD']){
 function index($pdo){
 	$stmt=$pdo->prepare('SELECT ID,title,date FROM posts');
 	$stmt->execute([]);
-	die(json_encode(['posts'=>$stmt->fetchAll(),'logged'=>isset($_SESSION['user/ID'])]));
+	if(!isset($_SESSION['user/is_admin'])){
+		$_SESSION['user/is_admin'] = 0;
+	}
+	die(json_encode(['posts'=>$stmt->fetchAll(),'logged'=>isset($_SESSION['user/ID']),'admin'=>$_SESSION['user/is_admin']]));
 }
 
 function detail($pdo){

@@ -16,6 +16,7 @@
 			<p id="ID"></p>
 			<p id="firstname"></p>
 			<p id="lastname"></p>
+			<p id="is_admin"></p>
 				<div class="d-grid gap-5 mt-5">
 				   <button class="btn btn-primary" type="submit">Back to Users</button>
 				</div>
@@ -38,9 +39,10 @@
 			$.getJSON('../API/admin.php?id='+findGetParameter('id'),function(data){
 				if(data.email==null) window.location.href='admin.html';
 				$('#email').text(data.email);
-				$('#ID').text(data.ID);
-				$('#firstname').text(data.firstname);
-				$('#lastname').text(data.lastname);
+				$('#ID').text('User\'s ID: '+data.ID);
+				$('#firstname').text('User\'s First Name: '+data.firstname);
+				$('#lastname').text('User\'s Last Name: '+data.lastname);
+				$('#is_admin').text('User\'s Admin level: '+data.is_admin);
 				if(data.manage==1){
 					$('.manage').removeClass('d-none');
 					$('#btn-edit').attr('href','users_edit.html?id='+findGetParameter('id'));
