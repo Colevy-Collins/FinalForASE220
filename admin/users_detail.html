@@ -9,17 +9,15 @@
 	<body>
 		<div class="container">
 			
-			<h1 id="title"></h1>
-			<a id="btn-edit" class="d-none manage" href="#">Edit this post</a>
+			<h1 id="email"></h1>
+			<a id="btn-edit" class="d-none manage" href="#">Edit this User</a>
 			<br />
-			<button id="btn-delete" class="d-none manage">Delete this post</button>
-			<p id="date"></p>
-			<p id="expiration"></p>
-			<p id="author"></p>
-			<p id="content"></p>
+			<button id="btn-delete" class="d-none manage">Delete this User</button>
+			<p id="ID"></p>
+			<p id="firstname"></p>
+			<p id="lastname"></p>
 				<div class="d-grid gap-5 mt-5">
-				  <button class="btn btn-primary" type="submit">Register</button>
-				  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
+				   <button class="btn btn-primary" type="submit">Back to Users</button>
 				</div>
 			
 		</div>
@@ -34,25 +32,24 @@
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 		-->
-		<script src="assets/jquery-3.5.1.min.js"></script>
-		<script src="assets/app.js"></script>
+		<script src="../assets/jquery-3.5.1.min.js"></script>
+		<script src="../assets/app.js"></script>
 		<script>
-			$.getJSON('/FinalASE220/API/posts.php?id='+findGetParameter('id'),function(data){
-				if(data.title==null) window.location.href='index.html';
-				$('#title').text(data.title);
-				$('#date').text('Published on: '+data.date);
-				$('#expiration').text('Published on: '+data.expiration);
-				$('#author').text("Published by: "+data.user_ID);
-				$('#content').text(data.content);
+			$.getJSON('../API/admin.php?id='+findGetParameter('id'),function(data){
+				if(data.email==null) window.location.href='admin.html';
+				$('#email').text(data.email);
+				$('#ID').text(data.ID);
+				$('#firstname').text(data.firstname);
+				$('#lastname').text(data.lastname);
 				if(data.manage==1){
 					$('.manage').removeClass('d-none');
-					$('#btn-edit').attr('href','posts_edit.html?id='+findGetParameter('id'));
+					$('#btn-edit').attr('href','users_edit.html?id='+findGetParameter('id'));
 				}
 			});
 			$(document).on('click','#btn-delete',function(){
 				$.ajax({
 					type:'DELETE',
-					url:'/FinalASE220/API/posts.php',
+					url:'../API/admin.php',
 					data:{
 						id:findGetParameter('id')
 					},
@@ -63,7 +60,7 @@
 				});
 			});
 			$(document).on("click",".btn-primary",function(){
-					
+					window.location.href="admin.html";
 					
 			});
 		</script>

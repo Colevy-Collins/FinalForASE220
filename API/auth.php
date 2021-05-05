@@ -1,10 +1,26 @@
 <?php
 require(__DIR__.'/lib_session.php');
 header('Content-type: application/json');
-if(isset($_GET['action']) && $_GET['action']=='signout' && isset($_SESSION['user/ID'])){
-	session_destroy();
-	die(json_encode(['status'=>1,'message'=>'You have been signed out']));
+if(isset($_GET['action']) && $_GET['action']=='signout'){
+	
+	if(isset($_SESSION['user/ID'])){
+		session_destroy();
+		die(json_encode(['status'=>1,'message'=>'You have been signed out']));
+	}else{
+		die(json_encode(['status'=>1, 'logged'=> 0,'message'=>'The user is not singed in']));
+	}
+	
 }
+
+if(isset($_GET['action']) && $_GET['action']=='checklogged'){
+	
+	if(isset($_SESSION['user/ID'])){
+		die(json_encode(['status'=>1, 'logged'=> 1,'message'=>'The user is singed in']));
+	}else{
+		die(json_encode(['status'=>1, 'logged'=> 0,'message'=>'The user is not singed in']));
+	}
+}
+
 if(isset($_SESSION['user/ID'])) die(json_encode(['status'=>-1,'message'=>'The user is already logged in.']));
 
 if(count($_POST)>0){

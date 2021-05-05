@@ -13,7 +13,7 @@
   <body>
   
     <div class="container">
-		<div class="row">
+		<div id="forms" class="row">
 			<div class="col-lg-6">
 				<h1>Access your account</h1>
 				<form id="signin" method="POST">
@@ -57,11 +57,11 @@
 					</div>
 				</form>
 			</div>
+		</div>		
 				<div class="d-grid gap-5 mt-5">
-				  <button class="btn btn-primary" type="submit">Sign out</button>
+				  <button id="signout" class="btn btn-primary" type="submit">Sign out</button>
 				  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
 				</div>
-		</div>		
 	</div>
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -70,6 +70,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 		<script src="assets/jquery-3.5.1.min.js"></script>
 		<script>
+			$.getJSON( "/FinalASE220/API/auth.php?action=checklogged", function( data ) {
+				console.log(data);
+				if (data.logged==1){
+					$("#forms").hide();
+				}else{
+					$("#signout").hide();
+				}
+			});
 			$(document).on('submit','#signin',function(e){
 				//tell the browser to ignore the default event handler
 				e.preventDefault();
@@ -119,17 +127,13 @@
 					}
 				});
 			});
-			$(document).on('submit','#signout',function(e){
+			$(document).on('click','#signout',function(e){
 				//tell the browser to ignore the default event handler
 				e.preventDefault();
 				
-				var data={
-					action:'signout'
-				};
 				$.ajax({
-					type:'POST',
+					type:'GET',
 					url:'/FinalASE220/API/auth.php?action=signout',
-					data:data,
 					success: function(output, status, xhr) { 
 						if(output.status==1){
 							$('form#signin .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');

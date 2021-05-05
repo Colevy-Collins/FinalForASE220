@@ -9,30 +9,23 @@
 	</head>
 	<body>
 		<form id="edit" method="POST">
-			<label>Title</title><br />
-			<input type="text" name="title" value="" /><br /><br />
+			<label>Email</title><br />
+			<input type="text" name="email" value="" /><br /><br />
 			
-			<label>Content</title><br />
-			<textarea name="content"></textarea><br /><br />
+			<label>First Name</title><br />
+			<textarea name="firstname"></textarea><br /><br />
 			
+			<label>Last Name</title><br />
+			<input type="text" name="lastname" value=""/><br /><br />
 			
-			<label>Date</title><br />
-			<input type="datetime-local" name="date" value=""/><br /><br />
-			
-			<label>Expiration</title><br />
-			<input type="datetime-local" name="expiration" /><br /><br />
-			
-			<label>Image</title><br />
-			<input type="url" name="img" value="" /><br /><br />
-			
-			<label>Author ID</title><br />
+			<label>User ID</title><br />
 			<input type="number" name="user_ID" value="" /><br /><br />
 			
-			<button type="submit">Edit post</button>
+			<button type="submit">Edit Users</button>
 		</form>
 		
 		<div class="d-grid gap-5 mt-5">
-		  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
+		  <a class="btn btn-primary" href="index.html" role="button">Back to Users</a>
 		</div>
 		
 		<!-- Optional JavaScript; choose one of the two! -->
@@ -45,8 +38,8 @@
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 		-->
-		<script src="assets/jquery-3.5.1.min.js"></script>
-		<script src="assets/app.js"></script>
+		<script src="../assets/jquery-3.5.1.min.js"></script>
+		<script src="../assets/app.js"></script>
 		<script>
 			$.getJSON('/FinalASE220/API/posts.php?id='+findGetParameter('id'),function(data){
 				if(data.title==null) window.location.href='index.html';

@@ -1,7 +1,4 @@
-1. what edits do we have to make to the starting point
-2. will you be providing aid with this final 
-3. can we test and create our final using the heroku database or is it better to use a local one first
-4. (depending on the answer to 3 and 2) how do I get my local database working. or the same with heroku
-5. do I have to have a diffrent types of tickets or could there just be one type
-7. is my current database structure good.
-8. how do we handle payment.
+1. finish admin
+2. finsh admin acces locks
+3. start registration
+4. add tables for sign up sheet
