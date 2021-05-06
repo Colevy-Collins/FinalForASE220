@@ -11,10 +11,6 @@ switch($_SERVER['REQUEST_METHOD']){
 	case 'POST': 
 		create($pdo);
 		break;
-	case 'PUT':
-		parse_str(file_get_contents("php://input"),$_PUT);
-		edit($pdo,$_PUT);
-		break;
 	case 'DELETE':
 		parse_str(file_get_contents("php://input"),$_DELETE);
 		delete($pdo,$_DELETE['id']);
@@ -24,12 +20,9 @@ switch($_SERVER['REQUEST_METHOD']){
 
 
 function detail($pdo){
-	$stmt = $pdo->prepare('SELECT user_ID FROM registration WHERE ID=?');
+	$stmt = $pdo->prepare('SELECT ID, user_ID FROM registration WHERE event_ID=?');
 	$stmt->execute([$_GET['id']]);
-	$post=$stmt->fetch();
-	if(isset($_SESSION['user/ID']) && ($post['user_ID']==$_SESSION['user/ID'] || $_SESSION['user/is_admin']==1)) $post['manage']=1;
-	else $post['manage']=0;
-	die(json_encode($post));
+	die(json_encode(['users'=>$stmt->fetchAll()]));
 }
 
 function create($pdo){
@@ -41,17 +34,8 @@ function create($pdo){
 	}
 }
 
-function edit($pdo,$_PUT){
-	if(count($_PUT)>0){
-		$stmt = $pdo->prepare('UPDATE posts SET title = ?, content = ?, date = ?, img = ?, user_ID =? WHERE posts.ID =?');
-		$stmt->execute([$_PUT['title'],$_PUT['content'],str_replace('T',' ',$_PUT['date']),$_PUT['img'],$_PUT['user_ID'],$_PUT['ID']]);
-		die(json_encode(['status'=>1,'message'=>'Your data have been saved']));
-	}
-	die(json_encode(['status'=>-1,'message'=>'Your data were not saved']));
-}
-
 function delete($pdo,$id){
-	$stmt = $pdo->prepare('SELECT * FROM posts WHERE ID=?');
+	$stmt = $pdo->prepare('SELECT * FROM registration WHERE ID=?');
 	$stmt->execute([$id]);
 	$post=$stmt->fetch();
 	if(!isset($_SESSION['user/ID']) || $post['user_ID']!=$_SESSION['user/ID']) die(json_encode(['status'=>-1,'message'=>'You don\'t have the rights for this action']));

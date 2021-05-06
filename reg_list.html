@@ -42,8 +42,8 @@
 	
 	<script>
 		$.getJSON('/FinalASE220/API/register.php?id='+findGetParameter('id'),function(data){
-			for(let i=0;i<data.length;i++){
-				$('tbody').append('<tr><td>'+data[i].user_ID+'</td><td>tr><td>'+data[i].user_ID+'</td><td><tr><td>'+data[i].user_ID+'</td><td><tr><td>'+data[i].user_ID+'</td><td>');
+			for(let i=0;i<data.users.length;i++){
+				$('tbody').append('<tr><td>'+data.users[i].user_ID+'</td><td>');
 			}
 		});
 	</script>
