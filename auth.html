@@ -93,8 +93,8 @@
 					data:data,
 					success: function(output, status, xhr) { 
 						if(output.status==1){
-							$('form#signin .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');
-							$('form#signin .alert').text(output.message);
+							$('form#signin .alert').removeClass('alert-danger')
+							$('form#signin .alert').text("");
 							window.location='index.html';
 						}else{
 							$('form#signin .alert').addClass('alert-danger').removeClass('d-none');

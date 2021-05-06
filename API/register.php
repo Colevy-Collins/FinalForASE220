@@ -7,7 +7,6 @@ header('Content-type: application/json');
 switch($_SERVER['REQUEST_METHOD']){
 	case 'GET':
 		if(isset($_GET['id'])) detail($pdo);
-		else index($pdo);
 		break;
 	case 'POST': 
 		create($pdo);
@@ -23,39 +22,29 @@ switch($_SERVER['REQUEST_METHOD']){
 }
 
 
-function index($pdo){
-	$stmt=$pdo->prepare('SELECT ID,title,date FROM posts');
-	$stmt->execute([]);
-	if(!isset($_SESSION['user/is_admin'])){
-		$_SESSION['user/is_admin'] = 0;
-	}
-	die(json_encode(['posts'=>$stmt->fetchAll(),'logged'=>isset($_SESSION['user/ID']),'admin'=>$_SESSION['user/is_admin']]));
-}
 
 function detail($pdo){
-	$stmt = $pdo->prepare('SELECT ID,title,content,user_ID,date FROM posts WHERE ID=?');
+	$stmt = $pdo->prepare('SELECT user_ID FROM registration WHERE ID=?');
 	$stmt->execute([$_GET['id']]);
 	$post=$stmt->fetch();
 	if(isset($_SESSION['user/ID']) && ($post['user_ID']==$_SESSION['user/ID'] || $_SESSION['user/is_admin']==1)) $post['manage']=1;
 	else $post['manage']=0;
-	if(isset($_SESSION['user/ID'])) $post['logged']=1;
-	else $post['logged']=0;
 	die(json_encode($post));
 }
 
 function create($pdo){
 	if(!isset($_SESSION['user/ID'])) die(json_encode(['status'=>-1,'message'=>'This page is for registered users only. Please <a href="auth.php">Sign in</a>.']));
 	if(count($_POST)>0){
-		$stmt = $pdo->prepare('INSERT INTO posts (title, content, date, capacity, user_ID) VALUES (?,?,?,?,?,?)');
-		$stmt->execute([$_POST['title'],$_POST['content'],str_replace('T',' ',$_POST['date']),$_POST['capacity'],$_SESSION['user/ID']]);
-		die(json_encode(['status'=>1,'message'=>'The message has been saved.']));
+		$stmt = $pdo->prepare('INSERT INTO registration (event_ID, user_ID) VALUES (?,?)');
+		$stmt->execute([$_POST['id'],$_SESSION['user/ID']]);
+		die(json_encode(['status'=>1,'message'=>'You have been registered.']));
 	}
 }
 
 function edit($pdo,$_PUT){
 	if(count($_PUT)>0){
-		$stmt = $pdo->prepare('UPDATE posts SET title = ?, content = ?, date = ?, user_ID =? WHERE posts.ID =?');
-		$stmt->execute([$_PUT['title'],$_PUT['content'],str_replace('T',' ',$_PUT['date']),$_PUT['user_ID'],$_PUT['ID']]);
+		$stmt = $pdo->prepare('UPDATE posts SET title = ?, content = ?, date = ?, img = ?, user_ID =? WHERE posts.ID =?');
+		$stmt->execute([$_PUT['title'],$_PUT['content'],str_replace('T',' ',$_PUT['date']),$_PUT['img'],$_PUT['user_ID'],$_PUT['ID']]);
 		die(json_encode(['status'=>1,'message'=>'Your data have been saved']));
 	}
 	die(json_encode(['status'=>-1,'message'=>'Your data were not saved']));

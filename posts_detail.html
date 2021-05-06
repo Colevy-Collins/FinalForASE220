@@ -10,18 +10,15 @@
 		<div class="container">
 			
 			<h1 id="title"></h1>
-			<a id="btn-edit" class="d-none manage" href="#">Edit this post</a>
-			<br />
-			<button id="btn-delete" class="d-none manage">Delete this post</button>
+			<a id="btn-edit" class="btn btn-primary d-none manage " href="#">Edit this post</a>
+			<button id="btn-delete" class="btn btn-primary d-none manage">Delete this post</button>
 			<p id="date"></p>
-			<p id="expiration"></p>
 			<p id="author"></p>
 			<p id="content"></p>
-				<div class="d-grid gap-5 mt-5">
-				  <button class="btn btn-primary" type="submit">Register</button>
-				  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
-				</div>
-			
+		<div class="d-grid gap-5 mt-5">
+			<button id="register" class="btn btn-primary" type="submit">Register</button>
+			<a id="reglist" class="btn btn-primary d-none manage" href="#">Registation List</a>
+			<a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
 		</div>
 		
 		<!-- Optional JavaScript; choose one of the two! -->
@@ -38,10 +35,12 @@
 		<script src="assets/app.js"></script>
 		<script>
 			$.getJSON('/FinalASE220/API/posts.php?id='+findGetParameter('id'),function(data){
+					if (data.logged==0){
+						$("#register").hide();
+					}
 				if(data.title==null) window.location.href='index.html';
 				$('#title').text(data.title);
-				$('#date').text('Published on: '+data.date);
-				$('#expiration').text('Published on: '+data.expiration);
+				$('#date').text('Date of event: '+data.date);
 				$('#author').text("Published by: "+data.user_ID);
 				$('#content').text(data.content);
 				if(data.manage==1){
@@ -49,6 +48,7 @@
 					$('#btn-edit').attr('href','posts_edit.html?id='+findGetParameter('id'));
 				}
 			});
+			
 			$(document).on('click','#btn-delete',function(){
 				$.ajax({
 					type:'DELETE',
@@ -62,9 +62,22 @@
 					}
 				});
 			});
-			$(document).on("click",".btn-primary",function(){
+			$(document).on("click","#register",function(){
+					$.ajax({
+					type:'POST',
+					url:'/FinalASE220/API/register.php',
+					data:{
+						id:findGetParameter('id')
+					},
+					success: function(output, status, xhr) { 
+						alert("You have been register")
+						window.location='index.html';
+					}
+				});	
 					
-					
+			});
+			$(document).on("click","#reglist",function(){
+					$('#reglist').attr('href','reg_list.html?id='+findGetParameter('id'));
 			});
 		</script>
 	</body>

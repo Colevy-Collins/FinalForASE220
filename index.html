@@ -48,7 +48,7 @@
 				for(i=0;i<data.posts.length;i++) $('#posts').append('<div><h3><a href="posts_detail.html?id='+data.posts[i].ID+'">'+data.posts[i].title+'</a></h3></div>');
 			});
 			
-			$(document).on("click",".btn-primary",function(){
+			$(document).on("click","#signin",function(){
 					window.location.href="auth.html";
 					
 			});
@@ -69,6 +69,7 @@
 					url:'/FinalASE220/API/auth.php?action=signout',
 					success: function(output, status, xhr) { 
 							alert(output.message);
+							window.location.href="index.html";
 					}
 				});
 			});
