@@ -26,7 +26,7 @@ function detail($pdo){
 }
 
 function create($pdo){
-	if(!isset($_SESSION['user/ID'])) die(json_encode(['status'=>-1,'message'=>'This page is for registered users only. Please <a href="auth.php">Sign in</a>.']));
+	if(!isset($_SESSION['user/ID'])) die(json_encode(['status'=>-2,'message'=>'This action is for registered users only... Please signin']));
 	
 	$query=$pdo->prepare('SELECT ID FROM registration WHERE user_ID=? AND event_ID=?');
 	$query->execute([$_SESSION['user/ID'],$_POST['id']]);
