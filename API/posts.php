@@ -44,7 +44,7 @@ function detail($pdo){
 function create($pdo){
 	if(!isset($_SESSION['user/ID'])) die(json_encode(['status'=>-1,'message'=>'This page is for registered users only. Please <a href="auth.php">Sign in</a>.']));
 	if(count($_POST)>0){
-		$stmt = $pdo->prepare('INSERT INTO posts (title, content, date, capacity, user_ID) VALUES (?,?,?,?,?,?)');
+		$stmt = $pdo->prepare('INSERT INTO posts (title, content, date, capacity, user_ID) VALUES (?,?,?,?,?)');
 		$stmt->execute([$_POST['title'],$_POST['content'],str_replace('T',' ',$_POST['date']),$_POST['capacity'],$_SESSION['user/ID']]);
 		die(json_encode(['status'=>1,'message'=>'The message has been saved.']));
 	}

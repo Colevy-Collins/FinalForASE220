@@ -28,10 +28,10 @@ function detail($pdo){
 function create($pdo){
 	if(!isset($_SESSION['user/ID'])) die(json_encode(['status'=>-1,'message'=>'This page is for registered users only. Please <a href="auth.php">Sign in</a>.']));
 	
-	$query=$pdo->prepare('SELECT ID FROM registration WHERE user_ID=?');
-	$query->execute([$_SESSION['user/ID']]);
+	$query=$pdo->prepare('SELECT ID FROM registration WHERE user_ID=? AND event_ID=?');
+	$query->execute([$_SESSION['user/ID'],$_POST['id']]);
 	if($query->rowCount()>0){
-		die(json_encode(['status'=>-1,'You have already registered.']));
+		die(json_encode(['status'=>-1,'message'=>'You have already registered.']));
 	}
 	
 	if(count($_POST)>0){
