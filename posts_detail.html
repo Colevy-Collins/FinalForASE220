@@ -14,6 +14,8 @@
 			<button id="btn-delete" class="btn btn-primary d-none manage">Delete this post</button>
 			<p id="date"></p>
 			<p id="author"></p>
+			<p id="capacity"></p>
+			<p id="slots"></p>
 			<p id="content"></p>
 		<div class="d-grid gap-5 mt-5">
 			<button id="register" class="btn btn-primary" type="submit">Register</button>
@@ -42,6 +44,8 @@
 				$('#title').text(data.title);
 				$('#date').text('Date of event: '+data.date);
 				$('#author').text("Published by: "+data.user_ID);
+				$('#capacity').text("Total capacity: "+data.capacity);
+				$('#slots').text("Total capacity left: "+(data.capacity - data.booked));
 				$('#content').text(data.content);
 				if(data.manage==1){
 					$('.manage').removeClass('d-none');

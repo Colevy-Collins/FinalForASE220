@@ -1,4 +1,3 @@
-2. fix reglist
-3. get reglist delete fucntction to work.
-4. disable the reg button based off of cap and date
+1. fix naming issues.
+2. make look better.
 5. get working on heroku and git pages
