@@ -1,3 +1,5 @@
-1. in auth. why dose my singup output messeage not work
-2. fix reg list.
-3. make capacity go up and retrict registartion.
+1. how to get my output.messeges to work.
+2. fix reglist
+3. get reglist delete fucntction to work.
+4. disable the reg button based off of cap and date
+5. get working on heroku and git pages

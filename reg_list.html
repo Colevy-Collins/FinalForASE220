@@ -26,6 +26,10 @@
 		</thead>
 	
 	</table>
+	
+		<div class="d-grid gap-5 mt-5">
+		  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
+		</div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -43,8 +47,21 @@
 	<script>
 		$.getJSON('/FinalASE220/API/register.php?id='+findGetParameter('id'),function(data){
 			for(let i=0;i<data.users.length;i++){
-				$('tbody').append('<tr><td>'+data.users[i].user_ID+'</td><td>');
+				$('tbody').append('<tr><td>'+data.users[i].user_ID+'</td><td><button id="btn-delete" class="btn btn-primary">Delete this post</button>');
 			}
+		});
+		$(document).on('click','#btn-delete',function(){
+			$.ajax({
+				type:'DELETE',
+				url:'/FinalASE220/API/register.php',
+				data:{
+					
+				},
+				success: function(output, status, xhr) { 
+					if(output.status==1) window.location.href='index.html';
+					else alert(output.message);
+				}
+			});
 		});
 	</script>
   </body>
