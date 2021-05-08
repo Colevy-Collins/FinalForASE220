@@ -91,7 +91,7 @@
 				};
 				$.ajax({
 					type:'POST',
-					url:api+'auth.php',
+					url:'/FinalASE220/API/auth.php',
 					data:data,
 					success: function(output, status, xhr) { 
 						if(output.status==1){
@@ -118,7 +118,7 @@
 				};
 				$.ajax({
 					type:'POST',
-					url:api+'auth.php',
+					url:'/FinalASE220/API/auth.php',
 					data:data,
 					success: function(output, status, xhr) { 
 						if(output.status==1){
@@ -137,7 +137,7 @@
 				
 				$.ajax({
 					type:'GET',
-					url:api+'auth.php?action=signout',
+					url:'/FinalASE220/API/auth.php?action=signout',
 					success: function(output, status, xhr) { 
 						if(output.status==1){
 							$('form#signin .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');
