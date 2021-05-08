@@ -17,7 +17,7 @@
 		 <button id="createbnt"type="button" class="btn btn-secondary">Create Post</button>
 		 <button id="admin"type="button" class="btn btn-dark">User Access</button>
 		 
-		<div id="posts">
+		<div id="events">
 		</div>
 		
 		
@@ -45,7 +45,7 @@
 					if (data.admin==0){
 						$('#admin').hide();
 					}	
-				for(i=0;i<data.posts.length;i++) $('#posts').append('<div><h3><a href="posts_detail.html?id='+data.posts[i].ID+'">'+data.posts[i].title+'</a></h3></div>');
+				for(i=0;i<data.events.length;i++) $('#events').append('<div><h3><a href="posts_detail.html?id='+data.events[i].ID+'">'+data.events[i].title+'</a></h3></div>');
 			});
 			
 			$(document).on("click","#signin",function(){

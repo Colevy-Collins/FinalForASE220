@@ -34,7 +34,7 @@ function create($pdo){
 		die(json_encode(['status'=>-1,'message'=>'You have already registered.']));
 	}
 
-	$query=$pdo->prepare('SELECT posts.capacity, COUNT(registration.user_ID) AS booked FROM posts JOIN registration ON posts.ID = registration.event_ID WHERE ID = ?');
+	$query=$pdo->prepare('SELECT events.capacity, COUNT(registration.user_ID) AS booked FROM events JOIN registration ON events.ID = registration.event_ID WHERE ID = ?');
 	$query->execute([$_POST['id']]);
 	$avaliblity=$query->fetch();
 	if ($avaliblity['booked']>=$avaliblity['capacity']){

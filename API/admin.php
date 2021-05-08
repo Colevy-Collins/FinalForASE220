@@ -54,7 +54,7 @@ function delete($pdo,$id){
 	$stmt = $pdo->prepare('SELECT * FROM users WHERE ID=?');
 	$stmt->execute([$id]);
 	$user=$stmt->fetch();
-	if(!isset($_SESSION['user/ID']) || $user['user_ID']!=$_SESSION['user/ID']) die(json_encode(['status'=>-1,'message'=>'You don\'t have the rights for this action']));
+	if(!isset($_SESSION['user/ID']) || $_SESSION['user/is_admin']!=1) die(json_encode(['status'=>-1,'message'=>'You don\'t have the rights for this action']));
 	$stmt = $pdo->prepare('DELETE FROM users WHERE ID=?');
 	$stmt->execute([$id]);
 	die(json_encode(['status'=>1,'message'=>'The user has been deleted']));
