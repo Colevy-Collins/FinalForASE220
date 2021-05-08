@@ -46,7 +46,7 @@
     -->
 	
 	<script>
-		$.getJSON('/FinalASE220/API/register.php?id='+findGetParameter('id'),function(data){
+		$.getJSON(api+'register.php?id='+findGetParameter('id'),function(data){
 			for(let i=0;i<data.users.length;i++){
 				$('tbody').append('<tr><td>'+data.users[i].ID+'</td><td>'+data.users[i].email+'</td><td>'+data.users[i].firstname+'</td><td>'+data.users[i].lastname+'</td><td><button id="btn-delete" data-userid="'+data.users[i].ID+'" class="btn btn-primary">Delete this post</button>');
 			}
@@ -55,7 +55,7 @@
 			var button = $(this);
 			$.ajax({
 				type:'DELETE',
-				url:'/FinalASE220/API/register.php',
+				url:api+'register.php',
 				data:{
 					event_ID:findGetParameter('id'),
 					user_ID:button.data("userid"),

@@ -36,7 +36,7 @@
 		<script src="assets/jquery-3.5.1.min.js"></script>
 		<script src="assets/app.js"></script>
 		<script>
-			$.getJSON('/FinalASE220/API/posts.php?id='+findGetParameter('id'),function(data){
+			$.getJSON(api+'posts.php?id='+findGetParameter('id'),function(data){
 					if (data.logged==0){
 						$("#register").hide();
 						alert("In order to register you must be signed in.");
@@ -62,7 +62,7 @@
 			$(document).on('click','#btn-delete',function(){
 				$.ajax({
 					type:'DELETE',
-					url:'/FinalASE220/API/posts.php',
+					url:api+'posts.php',
 					data:{
 						id:findGetParameter('id')
 					},
@@ -75,7 +75,7 @@
 			$(document).on("click","#register",function(){
 					$.ajax({
 					type:'POST',
-					url:'/FinalASE220/API/register.php',
+					url:api+'register.php',
 					data:{
 						id:findGetParameter('id')
 					},

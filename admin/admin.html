@@ -30,8 +30,9 @@
 		-->
 		
 		<script src="../assets/jquery-3.5.1.min.js"></script>
+		<script src="../assets/app.js"></script>
 		<script>
-			$.getJSON('../API/admin.php',function(data){
+			$.getJSON(api+'../API/admin.php',function(data){
 				console.log(data);
 				if(data.admin==0){
 					alert("You do not Have admin access. You will be returned to Events");
