@@ -1,0 +1,2 @@
+1. fix date reg button
+5. get working on heroku and git pages

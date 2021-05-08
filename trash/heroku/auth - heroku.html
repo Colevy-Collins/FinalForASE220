@@ -13,7 +13,7 @@
   <body>
   
     <div class="container">
-		<div id="forms" class="row">
+		<div class="row">
 			<div class="col-lg-6">
 				<h1>Access your account</h1>
 				<form id="signin" method="POST">
@@ -34,7 +34,6 @@
 			<div class="col-lg-6">
 				<h1>Register your account</h1>
 				<form id="signup" method="POST">
-					<div class="alert d-none" role="alert"></div>
 					<input type="hidden" name="action" value="signup" />
 					<div class="form-group">
 						<label>E-mail</label>
@@ -45,23 +44,11 @@
 						<input type="password" name="password" class="form-control" />
 					</div>
 					<div class="form-group mt-3">
-						<label>First Name</label>
-						<input type="firstname" name="firstname" class="form-control" />
-					</div>
-					<div class="form-group mt-3">
-						<label>Last Name</label>
-						<input type="lastname" name="lastname" class="form-control" />
-					</div>
-					<div class="form-group mt-3">
 						<button class="btn btn-primary" type="submit">Register your account</button>
 					</div>
 				</form>
-			</div>
+			</div>			
 		</div>		
-				<div class="d-grid gap-5 mt-5">
-				  <button id="signout" class="btn btn-primary" type="submit">Sign out</button>
-				  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
-				</div>
 	</div>
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -69,16 +56,7 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 		<script src="assets/jquery-3.5.1.min.js"></script>
-		<script src="assets/app.js"></script>
 		<script>
-			$.getJSON(api+'auth.php?action=checklogged', function( data ) {
-				console.log(data);
-				if (data.logged==1){
-					$("#forms").hide();
-				}else{
-					$("#signout").hide();
-				}
-			});
 			$(document).on('submit','#signin',function(e){
 				//tell the browser to ignore the default event handler
 				e.preventDefault();
@@ -90,58 +68,16 @@
 				};
 				$.ajax({
 					type:'POST',
-					url:api+'auth.php',
+					url:'https://nku-ase200-1.herokuapp.com/API/auth.php',
 					data:data,
-					success: function(output, status, xhr) { 
-						if(output.status==1){
-							$('form#signin .alert').removeClass('alert-danger')
-							$('form#signin .alert').text("");
-							window.location='index.html';
-						}else{
-							$('form#signin .alert').addClass('alert-danger').removeClass('d-none');
-							$('form#signin .alert').text(output.message);
-						}
-					}
-				});
-			});
-			$(document).on('submit','#signup',function(e){
-				//tell the browser to ignore the default event handler
-				e.preventDefault();
-				
-				var data={
-					email:$('form#signup input[name=email]').val(),
-					password:$('form#signup input[name=password]').val(),
-					firstname:$('form#signup input[name=firstname]').val(),
-					lastname:$('form#signup input[name=lastname]').val(),
-					action:'signup'
-				};
-				$.ajax({
-					type:'POST',
-					url:api+'auth.php',
-					data:data,
-					success: function(output, status, xhr) { 
-						if(output.status==1){
-							$('form#signup .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');
-							$('form#signup .alert').text(output.message);
-						}else{
-							$('form#signup .alert').addClass('alert-danger').removeClass('d-none');
-							$('form#signup .alert').text(output.message);
-						}
-					}
-				});
-			});
-			$(document).on('click','#signout',function(e){
-				//tell the browser to ignore the default event handler
-				e.preventDefault();
-				
-				$.ajax({
-					type:'GET',
-					url:api+'auth.php?action=signout',
 					success: function(output, status, xhr) { 
 						if(output.status==1){
 							$('form#signin .alert').removeClass('alert-danger').addClass('alert-success').removeClass('d-none');
 							$('form#signin .alert').text(output.message);
 							window.location='index.html';
+						}else{
+							$('form#signin .alert').addClass('alert-danger').removeClass('d-none');
+							$('form#signin .alert').text(output.message);
 						}
 					}
 				});

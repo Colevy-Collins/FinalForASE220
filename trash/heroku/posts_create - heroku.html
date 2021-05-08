@@ -1,0 +1,49 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<form method="POST" id="create">
+			<label>Title</title><br />
+			<input type="text" name="title" /><br /><br />
+			
+			<label>Content</title><br />
+			<textarea name="content"></textarea><br /><br />
+			
+			
+			<label>Date</title><br />
+			<input type="datetime-local" name="date" /><br /><br />
+			
+			<label>Image</title><br />
+			<input type="url" name="img" /><br /><br />
+			
+			<button type="submit">Create post</button>
+		</form>
+		<script src="assets/jquery-3.5.1.min.js"></script>
+		<script>
+			$(document).on('submit','#create',function(e){
+				//tell the browser to ignore the default event handler
+				e.preventDefault();
+				
+				var data={
+					title:$('form#create input[name=title]').val(),
+					content:$('form#create textarea[name=content]').val(),
+					date:$('form#create input[name=date]').val(),
+					img:$('form#create input[name=img]').val()
+				};
+				console.log(data);
+				$.ajax({
+					type:'POST',
+					url:'https://nku-ase200-1.herokuapp.com/API/posts.php',
+					data:data,
+					success: function(output, status, xhr) { 
+						if(output.status==1){
+							alert('request is successful');
+						}else{
+							alert(output.message);
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

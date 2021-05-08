@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>All our posts</title>
+	</head>
+	<body>
+		All our posts
+		<div id="posts">
+		</div>
+		<script src="assets/jquery-3.5.1.min.js"></script>
+		<script>
+			$.getJSON('https://nku-ase200-1.herokuapp.com/API/posts.php',function(data){
+				for(i=0;i<data.length;i++) $('#posts').append('<div><h3><a href="posts_detail.html?id='+data[i].ID+'">'+data[i].title+'</a></h3></div>');
+			});
+		</script>
+	</body>
+</html>

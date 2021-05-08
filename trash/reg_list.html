@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <title>Registation List</title>
+  </head>
+  <body>
+    <h1>Registation List</h1>
+	
+	<table border="1" class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">User ID</th>
+				<th scope="col">Email</th>
+				<th scope="col">First Name</th>
+				<th scope="col">Last Name</th>
+				<th scope="col"></th>
+			</tr>
+			<tbody>
+			</tbody>
+		</thead>
+	
+	</table>
+	
+		<div class="d-grid gap-5 mt-5">
+		  <a class="btn btn-primary" href="index.html" role="button">Back to Events</a>
+		</div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+	<script src="assets/jquery-3.5.1.min.js"></script>
+	<script src="assets/app.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+    -->
+	
+	<script>
+		$.getJSON(api+'register.php?id='+findGetParameter('id'),function(data){
+			for(let i=0;i<data.users.length;i++){
+				$('tbody').append('<tr><td>'+data.users[i].ID+'</td><td>'+data.users[i].email+'</td><td>'+data.users[i].firstname+'</td><td>'+data.users[i].lastname+'</td><td><button id="btn-delete" data-userid="'+data.users[i].ID+'" class="btn btn-primary">Delete this post</button>');
+			}
+		});
+		$(document).on('click','#btn-delete',function(){
+			var button = $(this);
+			$.ajax({
+				type:'DELETE',
+				url:api+'register.php',
+				data:{
+					event_ID:findGetParameter('id'),
+					user_ID:button.data("userid"),
+				},
+				success: function(output, status, xhr) { 
+					if(output.status==1){
+						button.parents("tr").remove();
+						alert(output.message);
+						
+					}else alert(output.message);
+				}
+			});
+		});
+	</script>
+  </body>
+</html>
