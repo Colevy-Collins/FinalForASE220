@@ -45,7 +45,7 @@
 			$.getJSON('/FinalASE220/API/posts.php?id='+findGetParameter('id'),function(data){
 				if(data.title==null) window.location.href='index.html';
 				$('#edit input[name=title]').val(data.title);
-				$('#edit input[name=date]').val(data.date);
+				$('#edit input[name=date]').val(data.date.replace(" ","T"));
 				$('#edit input[name=user_ID]').val(data.user_ID);
 				$('#edit textarea[name=content]').val(data.content);
 				if(data.manage==0) window.location.href='index.html';

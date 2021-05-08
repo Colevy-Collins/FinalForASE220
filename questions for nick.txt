@@ -1,3 +1,2 @@
-1. fix naming issues.
-2. make look better.
+1. fix date reg button
 5. get working on heroku and git pages

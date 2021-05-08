@@ -39,8 +39,11 @@
 			$.getJSON('/FinalASE220/API/posts.php?id='+findGetParameter('id'),function(data){
 					if (data.logged==0){
 						$("#register").hide();
+						alert("In order to register you must be signed in.");
 					}
-					if (data.date>=Date('year, month, day, hours, minutes, seconds')){
+					console.log(Date.parse(data.date));
+					console.log(Date.now())
+					if (Date.now()>=Date.parse(data.date)){
 						$("#register").hide();
 					}
 				if(data.title==null) window.location.href='index.html';
