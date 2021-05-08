@@ -1,3 +1,5 @@
+var api = "https://final-for-ase220.herokuapp.com/API/";
+
 function findGetParameter(parameterName){
 	var result = null,
 	tmp = [];
