@@ -68,7 +68,11 @@ function delete($pdo,$id){
 	$stmt = $pdo->prepare('SELECT * FROM events WHERE ID=?');
 	$stmt->execute([$id]);
 	$post=$stmt->fetch();
+<<<<<<< HEAD
 	if(!isset($_SESSION['user/ID']) || $post['user_ID']!=$_SESSION['user/ID']) die(json_encode(['status'=>-1,'message'=>'You don\'t have the rights for this action']));
+=======
+	if(!isset($_SESSION['user/ID']) || $post['user_ID']!=$_SESSION['user/ID'] || $_SESSION['user/is_admin']!=1) die(json_encode(['status'=>-1,'message'=>'You don\'t have the rights for this action']));
+>>>>>>> parent of 6edd038 (fixing errors 2)
 	$stmt = $pdo->prepare('DELETE FROM events WHERE ID=?');
 	$stmt->execute([$id]);
 	die(json_encode(['status'=>1,'message'=>'The post has been deleted']));
